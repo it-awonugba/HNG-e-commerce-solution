@@ -129,11 +129,19 @@ export default function Cart() {
               <h3>Total</h3>
               <h3>{formatCurrency(calculateFinalTotal())}</h3>
             </div>
-            <div>
-              <Button className="w-full">Proceed to Checkout</Button>
-              <Button className="w-full" variant="secondary">
+            <div className="space-y-4">
+              <Button className="w-full">
+                <Link href="/checkout">Proceed to Checkout</Link>
+              </Button>
+              <Button className="w-full" variant="inverted">
                 Pair Delivery with other users
               </Button>
+            </div>
+            <div>
+              <p className="font-bold">Return Policy</p>
+              <span className="font-normal text-xs">
+                returning an item is very easy. read details here
+              </span>
             </div>
           </div>
         </div>
