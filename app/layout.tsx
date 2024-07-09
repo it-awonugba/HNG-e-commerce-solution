@@ -1,8 +1,56 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
+import Header from "./_components/Header";
+import Footer from "./_components/Footer";
+import Banner from "./_components/Banner";
+import localFont from "next/font/local";
+import { CartProvider } from "./_context/CartContext";
 
-const inter = Inter({ subsets: ["latin"] });
+const acumin = localFont({
+  src: [
+    {
+      path: "../public/fonts/Acumin-Pro-UltraBlack.ttf",
+      weight: "900",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Acumin-Pro-Black.ttf",
+      weight: "800",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Acumin-Pro-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/FontsFree-Net-Acumin-Pro-Semibold.ttf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Acumin-Pro-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Acumin-RPro.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Acumin-Pro-Light.ttf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Acumin-Pro-Medium.ttf",
+      weight: "200",
+      style: "normal",
+    },
+  ],
+  variable: "--font-acumin",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -16,7 +64,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={acumin.className}>
+        <CartProvider>
+          <Header />
+          {children}
+          <Banner />
+          <Footer />
+        </CartProvider>
+      </body>
     </html>
   );
 }
