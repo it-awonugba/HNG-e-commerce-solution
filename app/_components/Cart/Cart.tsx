@@ -111,7 +111,7 @@ export default function Cart() {
 
           <div className="col-span-4 p-8 space-y-4 border rounded-lg">
             <div className="border-b-2">
-              <h3 className="text-2xl font-bold text-center">Cart Summarry</h3>
+              <h3 className="text-2xl font-bold text-center">Cart Summary</h3>
             </div>
             <div className="flex justify-between">
               <h3>Subtotal</h3>
