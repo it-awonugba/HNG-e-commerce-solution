@@ -11,32 +11,32 @@ export default function Search() {
     {
       id: 2,
       title: "Snacks",
-      image: "/images/snacks.png",
+      image: "/images/Snacks.png",
     },
     {
       id: 3,
       title: "Swallow",
-      image: "/images/swallow.png",
+      image: "/images/Swallow.png",
     },
     {
       id: 4,
       title: "Meals",
-      image: "/images/meals.png",
+      image: "/images/Meals.png",
     },
     {
       id: 5,
       title: "Drinks",
-      image: "/images/drinks.png",
+      image: "/images/Drinks.png",
     },
     {
       id: 6,
       title: "Soups",
-      image: "/images/soups.png",
+      image: "/images/Soups.png",
     },
     {
       id: 7,
       title: "Ice cream",
-      image: "/images/soups.png",
+      image: "/images/Soups.png",
     },
   ];
   return (
