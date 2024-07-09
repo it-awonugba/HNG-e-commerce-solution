@@ -22,37 +22,44 @@ export default function Cart() {
       <div className="space-y-12">
         <Nav />
         <div className="grid grid-cols-12 px-12 py-8 bg-white rounded-lg">
-          <div className="col-span-8 flex justify-between">
-            <div className="flex gap-4">
-              <Checkbox
-                className="h-5 w-5"
-                onClick={() => {
-                  cart.map((item, index) => setItemId(item.id));
-                }}
-              />
-              <h3 className="font-bold text-lg">Select all items</h3>
-            </div>
-            <div className="justify-end">
-              <Link
-                href="#"
-                className="flex"
-                onClick={() => {
-                  selectedItems.map((id, index) => {
-                    removeProductFromCart(id);
-                  });
-                }}
-              >
-                <Image
-                  src="/images/close.svg"
-                  width={19}
-                  height={19}
-                  alt="close"
+          <div className="col-span-8 justify-between">
+            <div className="flex px-4 pb-8">
+              <div className="w-1/2 flex gap-2">
+                <Checkbox
+                  className="h-5 w-5"
+                  onClick={() => {
+                    cart.map((item, index) => setItemId(item.id));
+                  }}
                 />
-                <span> Clear Cart</span>
-              </Link>
+                <h3 className="font-bold text-lg">Select all items</h3>
+                <span className="bg-primary text-white h-6 w-6 rounded-full text-center">
+                  {selectedItems.length}
+                </span>
+              </div>
+              <div className="w-1/2 flex justify-end">
+                <Link
+                  href="#"
+                  className="flex"
+                  onClick={() => {
+                    selectedItems.map((id, index) => {
+                      removeProductFromCart(id);
+                      let items = selectedItems.filter((idx) => idx !== id);
+                      setSelectedItems(items);
+                    });
+                  }}
+                >
+                  <Image
+                    src="/images/close.svg"
+                    width={19}
+                    height={19}
+                    alt="close"
+                  />
+                  <span> Clear Cart</span>
+                </Link>
+              </div>
             </div>
 
-            <div>
+            <div className="px-4 gap-4">
               {cart.map((row, index) => (
                 <CartRow
                   cartItem={row}
@@ -63,7 +70,9 @@ export default function Cart() {
             </div>
           </div>
 
-          <div className="col-span-4 border border-black">2</div>
+          <div className="col-span-4 border border-black">
+            Cart Summary coming soon
+          </div>
         </div>
         <FeaturedMenu />
       </div>
