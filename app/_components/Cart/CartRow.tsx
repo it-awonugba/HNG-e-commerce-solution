@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCart } from "@/app/_context/CartContext";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Product } from "@/data/data";
@@ -11,29 +11,38 @@ import { useFormatCurrency } from "@/app/_hook/useFormatCurrency";
 type CartRowProps = {
   setItemId: (id: number) => void;
   cartItem: Product;
+  isSelected: boolean;
 };
 
-export default function CartRow({ setItemId, cartItem }: CartRowProps) {
+export default function CartRow({
+  setItemId,
+  cartItem,
+  isSelected,
+}: CartRowProps) {
   const { formatCurrency } = useFormatCurrency();
   const [quantity, setQuantity] = useState<number>(cartItem.quantity!);
-  const { cart, addProductToCart, removeProductFromCart } = useCart();
+  const { addProductToCart, removeProductFromCart, cart } = useCart();
 
-  const decrement = () => {
-    addProductToCart(cartItem, -1);
-    setQuantity(quantity - 1);
+  const decrement = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (quantity >= 1) {
+      addProductToCart(cartItem, -1);
+    }
   };
 
-  const increment = () => {
-    console.log(cartItem);
+  const increment = (e: React.MouseEvent) => {
+    e.preventDefault();
     addProductToCart(cartItem);
-    setQuantity(quantity + 1);
-    console.log(cart);
   };
 
   return (
-    <div className="lg:grid lg:grid-cols-12 border-b-2 border-b-[#C9C5C0]">
+    <div className="py-8 lg:grid lg:grid-cols-12 border-b-2 border-b-[#C9C5C0]">
       <div className="col-span-1">
-        <Checkbox className="h-5 w-5" onClick={() => setItemId(cartItem.id)} />
+        <Checkbox
+          className="h-5 w-5"
+          onClick={() => setItemId(cartItem.id)}
+          checked={isSelected}
+        />
       </div>
       <div className="col-span-2">
         <Image
@@ -49,9 +58,30 @@ export default function CartRow({ setItemId, cartItem }: CartRowProps) {
         <p className="text-[#716F6C]">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
-        <section className="flex">
-          <Link href="#" className=""></Link>
-          <Link href="#" className=""></Link>
+        <section className="flex justify-between">
+          <Link href="#" className="">
+            <Image
+              src="/images/heart.png"
+              alt="Remove"
+              width={19}
+              height={19}
+              className="w-5 h-5"
+            />
+          </Link>
+          <Link
+            href="#"
+            className="flex flex-shrink item-center"
+            onClick={() => removeProductFromCart(cartItem.id)}
+          >
+            <Image
+              src="/images/close.svg"
+              alt="Remove"
+              width={19}
+              height={19}
+              className="w-5 h-5"
+            />
+            <span>Remove</span>
+          </Link>
         </section>
       </div>
       <div className="col-span-2 flex items-center">
@@ -71,7 +101,7 @@ export default function CartRow({ setItemId, cartItem }: CartRowProps) {
               src="/images/Minus.svg"
               width={19}
               height={19}
-              alt="Plus"
+              alt="Minus"
               className="w-4 h-4"
             />
           </Link>

@@ -8,14 +8,50 @@ import { useCart } from "@/app/_context/CartContext";
 import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import Image from "next/image";
+import { Product } from "@/data/data";
+import { Button } from "@/components/ui/button";
+import { useFormatCurrency } from "@/app/_hook/useFormatCurrency";
 
 export default function Cart() {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
-  const { cart, addProductToCart, removeProductFromCart } = useCart();
-
+  const { cart, removeProductFromCart } = useCart();
+  const { formatCurrency } = useFormatCurrency();
   const setItemId = (id: number) => {
-    const isSelected = selectedItems.findIndex((i) => i === id);
-    if (isSelected == -1) setSelectedItems((prev) => [...prev, id]);
+    setSelectedItems((prev) =>
+      prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
+    );
+  };
+
+  const handleSelectAll = () => {
+    if (selectedItems.length === cart.length) {
+      setSelectedItems([]);
+    } else {
+      setSelectedItems(cart.map((item) => item.id));
+    }
+  };
+
+  const calculateTax = () => {
+    return cart.length > 0
+      ? formatCurrency(
+          (2 / 100) *
+            cart.reduce((total, item) => total + item.price * item.quantity!, 0)
+        )
+      : formatCurrency(0);
+  };
+
+  const calculateSubTotal = () => {
+    return cart.length > 0
+      ? formatCurrency(
+          cart.reduce((total, item) => total + item.price * item.quantity!, 0)
+        )
+      : formatCurrency(0);
+  };
+
+  const calculateFinalTotal = () => {
+    const total =
+      cart.reduce((total, item) => total + item.price * item.quantity!, 0) +
+      calculateTax();
+    return parseInt(total) + parseInt(total) * (2 / 100);
   };
 
   return (
@@ -28,9 +64,10 @@ export default function Cart() {
               <div className="w-1/2 flex gap-2">
                 <Checkbox
                   className="h-5 w-5"
-                  onClick={() => {
-                    cart.map((item, index) => setItemId(item.id));
-                  }}
+                  onClick={handleSelectAll}
+                  checked={
+                    selectedItems.length === cart.length && cart.length > 0
+                  }
                 />
                 <h3 className="font-bold text-lg">Select all items</h3>
                 <span className="bg-primary text-white h-6 w-6 rounded-full text-center">
@@ -41,12 +78,12 @@ export default function Cart() {
                 <Link
                   href="#"
                   className="flex"
-                  onClick={() => {
-                    selectedItems.map((id, index) => {
+                  onClick={(e) => {
+                    e.preventDefault();
+                    selectedItems.forEach((id) => {
                       removeProductFromCart(id);
-                      let items = selectedItems.filter((idx) => idx !== id);
-                      setSelectedItems(items);
                     });
+                    setSelectedItems([]);
                   }}
                 >
                   <Image
@@ -61,14 +98,43 @@ export default function Cart() {
             </div>
 
             <div className="px-4 gap-4">
-              {cart.map((row, index) => (
-                <CartRow cartItem={row} key={row.id} setItemId={setItemId} />
+              {cart.map((row: Product) => (
+                <CartRow
+                  cartItem={row}
+                  key={row.id}
+                  setItemId={setItemId}
+                  isSelected={selectedItems.includes(row.id)}
+                />
               ))}
             </div>
           </div>
 
-          <div className="col-span-4 border border-black">
-            Cart Summary coming soon
+          <div className="col-span-4 p-8 space-y-4 border rounded-lg">
+            <div className="border-b-2">
+              <h3 className="text-2xl font-bold text-center">Cart Summarry</h3>
+            </div>
+            <div className="flex justify-between">
+              <h3>Subtotal</h3>
+              <h3>{calculateSubTotal()}</h3>
+            </div>
+            <div className="flex justify-between">
+              <h3>Tax 2%</h3>
+              <h3>{calculateTax()}</h3>
+            </div>
+            <div className="flex justify-between">
+              <h3>Delivery</h3>
+              <h3>free</h3>
+            </div>
+            <div className="flex justify-between border-t-2 pt-4">
+              <h3>Total</h3>
+              <h3>{formatCurrency(calculateFinalTotal())}</h3>
+            </div>
+            <div>
+              <Button className="w-full">Proceed to Checkout</Button>
+              <Button className="w-full" variant="secondary">
+                Pair Delivery with other users
+              </Button>
+            </div>
           </div>
         </div>
         <FeaturedMenu />
