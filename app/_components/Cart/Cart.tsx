@@ -14,14 +14,15 @@ export default function Cart() {
   const { cart, addProductToCart, removeProductFromCart } = useCart();
 
   const setItemId = (id: number) => {
-    setSelectedItems((prev) => [...prev, id]);
+    const isSelected = selectedItems.findIndex((i) => i === id);
+    if (isSelected == -1) setSelectedItems((prev) => [...prev, id]);
   };
 
   return (
     <>
       <div className="space-y-12">
         <Nav />
-        <div className="grid grid-cols-12 px-12 py-8 bg-white rounded-lg">
+        <div className="flex flex-col lg:grid lg:grid-cols-12 px-12 py-8 bg-white rounded-lg">
           <div className="col-span-8 justify-between">
             <div className="flex px-4 pb-8">
               <div className="w-1/2 flex gap-2">
@@ -61,11 +62,7 @@ export default function Cart() {
 
             <div className="px-4 gap-4">
               {cart.map((row, index) => (
-                <CartRow
-                  cartItem={row}
-                  key={row.id}
-                  setItemId={() => setItemId(row.id)}
-                />
+                <CartRow cartItem={row} key={row.id} setItemId={setItemId} />
               ))}
             </div>
           </div>
