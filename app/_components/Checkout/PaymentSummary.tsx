@@ -54,14 +54,14 @@ export default function PaymentSummary() {
           <Label>Name on Card</Label>
           <Input
             className="input-class w-full pr-3 pl-3 py-2 border rounded-md focus:outline-none"
-            placeholder="Area"
+            placeholder="Name on card"
           />
         </div>
         <div>
           <Label>Card Number</Label>
           <Input
             className="input-class w-full pr-3 pl-3 py-2 border rounded-md focus:outline-none"
-            placeholder="Area"
+            placeholder="Card Number"
           />
         </div>
       </section>
