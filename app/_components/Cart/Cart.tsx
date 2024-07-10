@@ -121,7 +121,7 @@ export default function Cart() {
             </div>
           </div>
 
-          <div className="col-span-4 space-y-4 p-3 border rounded-lg xl:p-8 ">
+          <div className="col-span-4 space-y-4 p-3 border rounded-lg xl:p-8">
             <div className="border-b-2">
               <h3 className="text-2xl font-bold text-center">Cart Summary</h3>
             </div>
