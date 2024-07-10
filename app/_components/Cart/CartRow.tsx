@@ -104,7 +104,7 @@ export default function CartRow({
               />
             </Link>
             <span className="block text-sm sm:text-base md:text-lg">
-              {quantity}
+              {cartItem.quantity}
             </span>
             <Link
               href="#"
@@ -202,7 +202,7 @@ export default function CartRow({
                 className="w-4 h-4"
               />
             </Link>
-            <span className="h-7 w-5 block">{quantity}</span>
+            <span className="h-7 w-5 block">{cartItem.quantity}</span>
             <Link
               href="#"
               className="w-6 h-6 rounded-full  text-[#FFF7F3]"
