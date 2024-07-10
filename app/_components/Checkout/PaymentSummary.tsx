@@ -48,8 +48,8 @@ export default function PaymentSummary() {
           </div>
         </RadioGroup>
       </section>
-      <section>
-        <h3>Enter Card Information</h3>
+      <section className="space-y-4">
+        <h3 className="font-bold text-lg">Enter Card Information</h3>
         <div>
           <Label>Name on Card</Label>
           <Input
@@ -64,6 +64,42 @@ export default function PaymentSummary() {
             placeholder="Card Number"
           />
         </div>
+        <section className="flex gap-2">
+          <div>
+            <Label>Expiry Date</Label>
+            <div className="relative">
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                <Image
+                  src="/images/calendar.svg"
+                  width={19}
+                  height={19}
+                  alt="Icon"
+                />
+              </div>
+              <Input
+                className="input-class w-full pr-3 pl-3 py-2 border rounded-md focus:outline-none"
+                placeholder="Expiry Date"
+              />
+            </div>
+          </div>
+          <div>
+            <Label>CVV</Label>
+            <div className="relative">
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                <Image
+                  src="/images/lock.svg"
+                  width={19}
+                  height={19}
+                  alt="Icon"
+                />
+              </div>
+              <Input
+                className="input-class w-full pr-10 pl-3 py-2 border rounded-md focus:outline-none"
+                placeholder="CVV"
+              />
+            </div>
+          </div>
+        </section>
       </section>
     </section>
   );
