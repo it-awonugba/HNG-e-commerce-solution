@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function BillingForm() {
   return (
-    <section>
+    <section className="mt-4">
       <h3 className="text-xl font-bold">Billing Details</h3>
       <p className="text-[#3B3533]">
         Enter a billing address for all your purchases and delivery
@@ -51,7 +51,7 @@ export default function BillingForm() {
               placeholder="Phone Number"
             />
           </div>
-          <div>
+          <div className="w-full lg:w-auto">
             <Checkbox className="border-input" /> Save my information for a
             faster checkout
           </div>

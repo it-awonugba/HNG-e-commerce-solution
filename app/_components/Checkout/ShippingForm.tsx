@@ -25,7 +25,9 @@ export default function ShippingForm() {
         </div>
       </RadioGroup>
       <div className="flex justify-end">
-        <Button size="lg">Change Address</Button>
+        <Button size="lg" className="w-full lg:w-auto">
+          Change Address
+        </Button>
       </div>
     </section>
   );

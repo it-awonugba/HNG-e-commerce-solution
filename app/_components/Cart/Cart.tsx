@@ -10,12 +10,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { Product } from "@/data/data";
 import { Button } from "@/components/ui/button";
-import { useFormatCurrency } from "@/app/_hook/useFormatCurrency";
+import { useCartComputation } from "@/app/_hook/useCartComputation";
 
 export default function Cart() {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const { cart, removeProductFromCart } = useCart();
-  const { formatCurrency } = useFormatCurrency();
+  const { tax, subTotal, total } = useCartComputation();
+
   const setItemId = (id: number) => {
     setSelectedItems((prev) =>
       prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
@@ -30,29 +31,6 @@ export default function Cart() {
     }
   };
 
-  const calculateTax = () => {
-    return cart.length > 0
-      ? formatCurrency(
-          (2 / 100) *
-            cart.reduce((total, item) => total + item.price * item.quantity!, 0)
-        )
-      : formatCurrency(0);
-  };
-
-  const calculateSubTotal = () => {
-    return cart.length > 0
-      ? formatCurrency(
-          cart.reduce((total, item) => total + item.price * item.quantity!, 0)
-        )
-      : formatCurrency(0);
-  };
-
-  const calculateFinalTotal = () => {
-    const total =
-      cart.reduce((total, item) => total + item.price * item.quantity!, 0) +
-      calculateTax();
-    return parseInt(total) + parseInt(total) * (2 / 100);
-  };
   const navOptions = {
     first_title: "Home",
     first_address: "/",
@@ -127,11 +105,11 @@ export default function Cart() {
             </div>
             <div className="flex justify-between">
               <h3>Subtotal</h3>
-              <h3>{calculateSubTotal()}</h3>
+              <h3>{subTotal}</h3>
             </div>
             <div className="flex justify-between">
               <h3>Tax 2%</h3>
-              <h3>{calculateTax()}</h3>
+              <h3>{tax}</h3>
             </div>
             <div className="flex justify-between">
               <h3>Delivery</h3>
@@ -139,7 +117,7 @@ export default function Cart() {
             </div>
             <div className="flex justify-between border-t-2 pt-4">
               <h3>Total</h3>
-              <h3>{formatCurrency(calculateFinalTotal())}</h3>
+              <h3>{total}</h3>
             </div>
             <div className="space-y-4">
               <Button className="w-full">
