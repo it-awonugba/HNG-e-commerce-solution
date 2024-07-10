@@ -53,15 +53,23 @@ export default function Cart() {
       calculateTax();
     return parseInt(total) + parseInt(total) * (2 / 100);
   };
+  const navOptions = {
+    first_title: "Home",
+    first_address: "/",
+    second_title: "Menu",
+    second_address: "/",
+    third_title: "Cart",
+    third_address: "/cart",
+  };
 
   return (
     <>
       <div className="space-y-12">
-        <Nav />
-        <div className="flex flex-col lg:grid lg:grid-cols-12 px-12 py-8 bg-white rounded-lg">
-          <div className="col-span-8 justify-between">
-            <div className="flex px-4 pb-8">
-              <div className="w-1/2 flex gap-2">
+        <Nav {...navOptions} />
+        <div className="flex flex-col px-4 py-4 lg:grid lg:grid-cols-12 lg:px-12 lg:py-8 bg-white rounded-lg">
+          <div className="w-full lg:col-span-8">
+            <div className="flex px-4 pb-8 justify-between">
+              <div className="justify-between items-center flex gap-1">
                 <Checkbox
                   className="h-5 w-5"
                   onClick={handleSelectAll}
@@ -69,15 +77,17 @@ export default function Cart() {
                     selectedItems.length === cart.length && cart.length > 0
                   }
                 />
-                <h3 className="font-bold text-lg">Select all items</h3>
-                <span className="bg-primary text-white h-6 w-6 rounded-full text-center">
+                <h3 className="text-nowrap font-bold text-xs lg:text-lg">
+                  Select all items
+                </h3>
+                <span className="text-xs w-4 h-4 bg-primary text-white  rounded-full text-center lg:h-6 lg:w-6 lg:text-lg">
                   {selectedItems.length}
                 </span>
               </div>
-              <div className="w-1/2 flex justify-end">
+              <div className="w-auto flex justify-end">
                 <Link
                   href="#"
-                  className="flex"
+                  className="flex items-center"
                   onClick={(e) => {
                     e.preventDefault();
                     selectedItems.forEach((id) => {
@@ -92,7 +102,9 @@ export default function Cart() {
                     height={19}
                     alt="close"
                   />
-                  <span> Clear Cart</span>
+                  <span className="text-primary text-xs lg:text-lg">
+                    Clear Cart
+                  </span>
                 </Link>
               </div>
             </div>
@@ -109,7 +121,7 @@ export default function Cart() {
             </div>
           </div>
 
-          <div className="col-span-4 p-8 space-y-4 border rounded-lg">
+          <div className="col-span-4 space-y-4 p-3 border rounded-lg xl:p-8 ">
             <div className="border-b-2">
               <h3 className="text-2xl font-bold text-center">Cart Summary</h3>
             </div>
