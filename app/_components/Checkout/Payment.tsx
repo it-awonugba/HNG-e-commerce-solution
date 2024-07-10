@@ -20,7 +20,7 @@ export default function Payment() {
       <section className="space-y-12">
         <Nav {...navOptions} />
         <section className="flex flex-col px-4 py-4 lg:grid lg:grid-cols-12 lg:px-12 lg:py-8 bg-white rounded-lg gap-x-10">
-          <div className="w-full lg:col-span-8 space-y-8">
+          <div className="w-full space-y-8 flex-row-reverse lg:col-span-8 lg:flex-col">
             <BillingForm />
             <ShippingForm />
           </div>
