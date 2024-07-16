@@ -1,3 +1,4 @@
+"use client";
 import { useFetchProducts } from "@/app/_hooks/useFetchData";
 import Menu from "./Menu";
 import Link from "next/link";
