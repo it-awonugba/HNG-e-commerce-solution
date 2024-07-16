@@ -6,6 +6,7 @@ import Singleton from "../_components/Product/Singleton";
 export default function Page() {
   const searchParam = useSearchParams();
   const id = searchParam?.get("id");
+
   if (!id) {
     return <div>...loading</div>;
   }
