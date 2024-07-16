@@ -5,6 +5,7 @@ import Link from "next/link";
 
 export default function FeaturedMenu() {
   const { products, loading, error } = useFetchProducts();
+
   const menu = products.filter((item) =>
     item.categories.find((category) => category.name == "featured")
   );

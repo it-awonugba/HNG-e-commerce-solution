@@ -5,10 +5,26 @@ export interface Price {
   [currency: string]: any[];
 }
 
+export type ProductCategory = {
+  category_type: string;
+  date_created: string;
+  description?: string;
+  id: string;
+  is_deleted: boolean;
+  last_updated: string;
+  name: string;
+  organization_id: string;
+  parent_id?: string;
+  parents: [];
+  position?: string;
+  subcategories: [];
+  url_slug?: string;
+};
+
 export interface Product {
   available_quantity: number | null;
   buying_price: number | null;
-  categories: string[];
+  categories: ProductCategory[];
   current_price: Price[];
   date_created: string;
   description: string | null;
@@ -42,14 +58,14 @@ export interface Product {
 
 interface FetchProductsResponse {
   products: Product[];
-  categories: string[];
+  categories: ProductCategory[];
   loading: boolean;
   error: string;
 }
 
 export const useFetchProducts = (): FetchProductsResponse => {
   const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<ProductCategory[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
@@ -72,8 +88,8 @@ export const useFetchProducts = (): FetchProductsResponse => {
     }
   };
 
-  const getUniqueCategories = (products: Product[]): string[] => {
-    const categorySet = new Set<string>();
+  const getUniqueCategories = (products: Product[]): ProductCategory[] => {
+    const categorySet = new Set<ProductCategory>();
 
     products.forEach((product) => {
       product.categories.forEach((category) => {
