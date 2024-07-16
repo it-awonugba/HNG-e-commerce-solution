@@ -1,23 +1,21 @@
 "use client";
+import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import FeaturedMenu from "../Menu/FeaturedMenu";
 import Recommendation from "../Recommendation/Recommendation";
 import Nav from "./Nav";
 import CartRow from "./CartRow";
-import { useCart } from "@/app/_context/CartContext";
+import { CartItemType, useCart } from "@/app/_context/CartContext";
 import { Checkbox } from "@/components/ui/checkbox";
-import Link from "next/link";
-import Image from "next/image";
-import { Product } from "@/data/data";
 import { Button } from "@/components/ui/button";
-import { useCartComputation } from "@/app/_hook/useCartComputation";
 
 export default function Cart() {
-  const [selectedItems, setSelectedItems] = useState<number[]>([]);
-  const { cart, removeProductFromCart } = useCart();
-  const { tax, subTotal, total } = useCartComputation();
+  const [selectedItems, setSelectedItems] = useState<string[]>([]);
+  const { cart, removeProductFromCart, getCartSummary } = useCart();
+  const cartSummary = getCartSummary();
 
-  const setItemId = (id: number) => {
+  const setItemId = (id: string) => {
     setSelectedItems((prev) =>
       prev.includes(id) ? prev.filter((itemId) => itemId !== id) : [...prev, id]
     );
@@ -88,7 +86,7 @@ export default function Cart() {
             </div>
 
             <div className="px-4 gap-4">
-              {cart.map((row: Product) => (
+              {cart.map((row: CartItemType) => (
                 <CartRow
                   cartItem={row}
                   key={row.id}
@@ -105,11 +103,11 @@ export default function Cart() {
             </div>
             <div className="flex justify-between">
               <h3>Subtotal</h3>
-              <h3>{subTotal}</h3>
+              <h3>{cartSummary.total}</h3>
             </div>
             <div className="flex justify-between">
-              <h3>Tax 2%</h3>
-              <h3>{tax}</h3>
+              <h3>Tax 10%</h3>
+              <h3>{cartSummary.tax}</h3>
             </div>
             <div className="flex justify-between">
               <h3>Delivery</h3>
@@ -117,7 +115,7 @@ export default function Cart() {
             </div>
             <div className="flex justify-between border-t-2 pt-4">
               <h3>Total</h3>
-              <h3>{total}</h3>
+              <h3>{cartSummary.netTotal}</h3>
             </div>
             <div className="space-y-4">
               <Button className="w-full">

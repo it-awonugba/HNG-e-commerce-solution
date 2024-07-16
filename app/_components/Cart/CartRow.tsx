@@ -1,16 +1,16 @@
 "use client";
-import { useState } from "react";
-import { useCart } from "@/app/_context/CartContext";
+import React from "react";
+import { useCart, CartItemType } from "@/app/_context/CartContext";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Product } from "@/data/data";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { useFormatCurrency } from "@/app/_hook/useFormatCurrency";
+import { useFormatImage } from "@/app/_hooks/useFormatImage";
+import { useFormatPrice } from "@/app/_hooks/useFormatPrice";
 
 type CartRowProps = {
-  setItemId: (id: number) => void;
-  cartItem: Product;
+  setItemId: (id: string) => void;
+  cartItem: CartItemType;
   isSelected: boolean;
 };
 
@@ -19,20 +19,23 @@ export default function CartRow({
   cartItem,
   isSelected,
 }: CartRowProps) {
-  const { formatCurrency } = useFormatCurrency();
-  const [quantity, setQuantity] = useState<number>(cartItem.quantity!);
   const { addProductToCart, removeProductFromCart } = useCart();
+  const { formatImage } = useFormatImage();
+  const { formatPrice } = useFormatPrice();
 
-  const decrement = (e: React.MouseEvent) => {
-    e.preventDefault();
-    if (quantity >= 1) {
-      addProductToCart(cartItem, -1);
+  const imageUrl = formatImage(cartItem.product);
+  const price = formatPrice(cartItem.product);
+
+  const decrement = () => {
+    if (cartItem.quantity > 1) {
+      addProductToCart(cartItem.product, -1);
+    } else {
+      removeProductFromCart(cartItem.id);
     }
   };
 
-  const increment = (e: React.MouseEvent) => {
-    e.preventDefault();
-    addProductToCart(cartItem);
+  const increment = () => {
+    addProductToCart(cartItem.product);
   };
 
   return (
@@ -47,8 +50,8 @@ export default function CartRow({
         </div>
         <div className="p-2 sm:p-3 md:p-4 flex flex-col items-center space-y-2">
           <Image
-            src={cartItem.image}
-            alt={cartItem.title}
+            src={imageUrl}
+            alt={cartItem.product.name}
             width={200}
             height={200}
             className="h-auto max-w-12 sm:max-w-16 md:max-w-20 rounded-lg"
@@ -70,13 +73,15 @@ export default function CartRow({
         </div>
         <div className="p-2 sm:p-3 md:p-4">
           <h3 className="font-bold text-xs sm:text-lg md:text-xl">
-            {cartItem.title}
+            {cartItem.product.name}
           </h3>
           <p className="text-[#716F6C] text-xs sm:text-base md:text-lg">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            {cartItem.product.description}
           </p>
           <span className="text-sm sm:text-base md:text-lg">
-            {formatCurrency(cartItem.quantity! * cartItem.price)}
+            {`${price.charAt(0)}${(
+              cartItem.quantity * Number(price.slice(1))
+            ).toFixed(2)}`}
           </span>
         </div>
         <div className="p-2 sm:p-3 md:p-4 flex flex-col items-center space-y-2">
@@ -93,7 +98,10 @@ export default function CartRow({
             <Link
               href="#"
               className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full text-center"
-              onClick={decrement}
+              onClick={(e) => {
+                e.preventDefault();
+                decrement();
+              }}
             >
               <Image
                 src="/images/Minus.svg"
@@ -109,7 +117,10 @@ export default function CartRow({
             <Link
               href="#"
               className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 rounded-full text-center text-[#FFF7F3]"
-              onClick={increment}
+              onClick={(e) => {
+                e.preventDefault();
+                increment();
+              }}
             >
               <Image
                 src="/images/Add-red.svg"
@@ -133,7 +144,7 @@ export default function CartRow({
         </div>
       </div>
 
-      <div className="hidden gap-0 border-b-2 border-b-[#C9C5C0] xl:grid xl:grid-cols-12 ">
+      <div className="hidden gap-0 border-b-2 border-b-[#C9C5C0] xl:grid xl:grid-cols-12 pb-2">
         <div className="col-span-1 flex items-center justify-center">
           <Checkbox
             className="h-5 w-5"
@@ -143,17 +154,17 @@ export default function CartRow({
         </div>
         <div className="col-span-2 flex items-center justify-center">
           <Image
-            src={cartItem.image}
-            alt={cartItem.title}
+            src={imageUrl}
+            alt={cartItem.product.name}
             width={200}
             height={200}
             className="h-auto max-w-24 rounded-lg"
           />
         </div>
         <div className="col-span-3 flex flex-col justify-center">
-          <h3 className="font-bold text-xl">{cartItem.title}</h3>
+          <h3 className="font-bold text-xl">{cartItem.product.name}</h3>
           <p className="text-[#716F6C] hidden lg:block">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            {cartItem.product.description}
           </p>
           <div className="flex justify-between pr-4 mt-4 lg:mt-0">
             <Link href="#" className="">
@@ -192,7 +203,10 @@ export default function CartRow({
             <Link
               href="#"
               className="w-6 h-6 rounded-full text-center"
-              onClick={decrement}
+              onClick={(e) => {
+                e.preventDefault();
+                decrement();
+              }}
             >
               <Image
                 src="/images/Minus.svg"
@@ -205,8 +219,11 @@ export default function CartRow({
             <span className="h-7 w-5 block">{cartItem.quantity}</span>
             <Link
               href="#"
-              className="w-6 h-6 rounded-full  text-[#FFF7F3]"
-              onClick={increment}
+              className="w-6 h-6 rounded-full text-center text-[#FFF7F3]"
+              onClick={(e) => {
+                e.preventDefault();
+                increment();
+              }}
             >
               <Image
                 src="/images/Add-red.svg"
@@ -218,8 +235,10 @@ export default function CartRow({
             </Link>
           </div>
         </div>
-        <div className="col-span-2 flex items-center justify-center mt-4">
-          <span>{formatCurrency(cartItem.quantity! * cartItem.price)}</span>
+        <div className="col-span-2 flex items-center justify-center">
+          <span>{`${price.charAt(0)}${(
+            cartItem.quantity * Number(price.slice(1))
+          ).toFixed(2)}`}</span>
         </div>
       </div>
     </>

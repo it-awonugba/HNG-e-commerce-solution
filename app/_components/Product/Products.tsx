@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import Product, { ProductItem } from "./Product";
+import Product from "./Product";
+import { Product as ProductItem } from "@/app/_hooks/useFetchData";
 
 type ProductsProp = {
   items: ProductItem[];

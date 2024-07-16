@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useCartComputation } from "@/app/_hook/useCartComputation";
+import { useCartComputation } from "@/app/_hooks/useCartComputation";
 
 export default function PaymentSummary() {
   const { tax, subTotal, total } = useCartComputation();
