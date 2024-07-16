@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 
 export default function Page() {
   const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const id = searchParams!.get("id");
 
   return (
     <Suspense fallback={<div>...loading</div>}>
