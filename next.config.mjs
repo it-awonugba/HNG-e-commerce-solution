@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
-const baseUrl = process.env.API_BASE_URL;
 const nextConfig = {
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
   async headers() {
     return [
       {
