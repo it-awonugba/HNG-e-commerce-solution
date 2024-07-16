@@ -1,5 +1,5 @@
 "use client";
-import { Suspense } from "react";
+
 import { useSearchParams } from "next/navigation";
 import Singleton from "../_components/Product/Singleton";
 
@@ -10,9 +10,5 @@ export default function Page() {
     return <div>...loading</div>;
   }
 
-  return (
-    <Suspense fallback={<div>...loading</div>}>
-      <Singleton id={id} />
-    </Suspense>
-  );
+  return <Singleton id={id} />;
 }
