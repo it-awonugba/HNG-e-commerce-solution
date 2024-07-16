@@ -21,6 +21,19 @@ export type ProductCategory = {
   url_slug?: string;
 };
 
+export type Photo = {
+  file_rename: boolean;
+  filename: string;
+  is_featured: boolean;
+  is_public: boolean;
+  model_id: string;
+  model_name: string;
+  organization_id: string;
+  position: number;
+  save_as_jpg: boolean;
+  url: string;
+};
+
 export interface Product {
   available_quantity: number | null;
   buying_price: number | null;
@@ -40,7 +53,7 @@ export interface Product {
   organization_id: string;
   parent: string | null;
   parent_product_id: string | null;
-  photos: string[];
+  photos: Photo[];
   previous_url_slugs: string | null;
   prices: string | null;
   product_image: string[];
