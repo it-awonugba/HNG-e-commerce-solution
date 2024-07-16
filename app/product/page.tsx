@@ -8,6 +8,10 @@ import { useFormatPrice } from "../_hooks/useFormatPrice";
 import { useCart } from "../_context/CartContext";
 import { Button } from "@/components/ui/button";
 
+export type ProductPageContentProps = {
+  id: string | null;
+};
+
 export default function Page() {
   const searchParams = useSearchParams();
   const id = searchParams!.get("id");
@@ -19,7 +23,7 @@ export default function Page() {
   );
 }
 
-function ProductPageContent({ id }) {
+function ProductPageContent({ id }: ProductPageContentProps) {
   const { products, loading, error } = useFetchProducts();
   const { formatImage } = useFormatImage();
   const { formatPrice } = useFormatPrice();
