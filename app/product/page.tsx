@@ -1,7 +1,7 @@
 "use client";
-import { Suspense } from "react";
+
 import Image from "next/image";
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
 import { useFetchProducts } from "@/app/_hooks/useFetchData";
 import { useFormatImage } from "@/app/_hooks/useFormatImage";
 import { useFormatPrice } from "../_hooks/useFormatPrice";
@@ -13,27 +13,15 @@ export type ProductPageContentProps = {
 };
 
 export default function Page() {
-  const searchParams = useSearchParams();
-  const id = searchParams!.get("id");
-
-  if (!searchParams) {
-    return <div>...loading</div>;
-  }
-  return (
-    <Suspense fallback={<div>...loading</div>}>
-      <ProductPageContent id={id} />
-    </Suspense>
-  );
-}
-
-function ProductPageContent({ id }: ProductPageContentProps) {
+  const router = useRouter();
   const { products, loading, error } = useFetchProducts();
   const { formatImage } = useFormatImage();
   const { formatPrice } = useFormatPrice();
   const { addProductToCart } = useCart();
+  const { id } = router.query;
   const product = products.find((item) => item.id == id);
 
-  if (loading || !product) {
+  if (loading || !product || !id) {
     return <div>...loading</div>;
   }
 
