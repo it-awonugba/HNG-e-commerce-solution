@@ -16,6 +16,9 @@ export default function Page() {
   const searchParams = useSearchParams();
   const id = searchParams!.get("id");
 
+  if (!searchParams) {
+    return <div>...loading</div>;
+  }
   return (
     <Suspense fallback={<div>...loading</div>}>
       <ProductPageContent id={id} />
