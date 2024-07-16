@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useFetchProducts } from "@/app/_hooks/useFetchData";
 import { useFormatImage } from "@/app/_hooks/useFormatImage";
 import { useFormatPrice } from "../_hooks/useFormatPrice";
@@ -18,7 +18,9 @@ export default function Page() {
   const { formatImage } = useFormatImage();
   const { formatPrice } = useFormatPrice();
   const { addProductToCart } = useCart();
-  const { id } = router.query;
+  const searchParam = useSearchParams();
+  const id = searchParam?.get("id");
+
   const product = products.find((item) => item.id == id);
 
   if (loading || !product || !id) {
