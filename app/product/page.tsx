@@ -11,7 +11,7 @@ export default function Page() {
   }
 
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<div>...loading</div>}>
       <Singleton id={id} />
     </Suspense>
   );
