@@ -118,6 +118,7 @@ export default function Singleton({ id }: SingletonProps) {
               </Link>
             </div>
             <Button
+              className="space-x-2"
               onClick={(e) => {
                 e.preventDefault();
                 addProductToCart(product, quantity);
@@ -127,7 +128,14 @@ export default function Singleton({ id }: SingletonProps) {
                 });
               }}
             >
-              Order now
+              <span>Order Now</span>
+              <Image
+                src="/images/white-shopping-cart.svg"
+                alt="heart"
+                width={19}
+                height={19}
+                className="w-4 h-4"
+              />
             </Button>
           </div>
         </div>
