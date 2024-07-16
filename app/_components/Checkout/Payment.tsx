@@ -1,3 +1,4 @@
+"use client";
 import Nav from "../Cart/Nav";
 import FeaturedMenu from "../Menu/FeaturedMenu";
 import Recommendation from "../Recommendation/Recommendation";
