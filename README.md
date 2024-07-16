@@ -1,4 +1,5 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This project uses data pulled from api.timbu.cloud.
+To use this app, create an account on `Timbu`, get the API_KEY, ORG_ID, APP_ID, API_BASE_URL and setup your .env file. The create your products on Timbu.
 
 ## Getting Started
 
