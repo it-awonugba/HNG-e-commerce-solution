@@ -4,10 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useCartComputation } from "@/app/_hooks/useCartComputation";
+import { useCart } from "@/app/_context/CartContext";
 
 export default function PaymentSummary() {
-  const { tax, subTotal, total } = useCartComputation();
+  const { getCartSummary } = useCart();
+  const cartSummary = getCartSummary();
+
   return (
     <section>
       <h3 className="font-bold text-xl">Payment Information</h3>
@@ -109,11 +111,11 @@ export default function PaymentSummary() {
       <section className="space-y-4">
         <div className="flex justify-between border-t-2 pt-4 mt-8">
           <h3>Subtotal</h3>
-          <h3 className="font-bold text-md">{subTotal}</h3>
+          <h3 className="font-bold text-md">{cartSummary.total}</h3>
         </div>
         <div className="flex justify-between">
           <h3>Tax 2%</h3>
-          <h3>{tax}</h3>
+          <h3>{cartSummary.total}</h3>
         </div>
         <div className="flex justify-between">
           <h3>Discount</h3>
@@ -121,11 +123,11 @@ export default function PaymentSummary() {
         </div>
         <div className="flex justify-between border-t-2 pt-4">
           <h3 className="font-bold text-md">Total</h3>
-          <h3 className="font-bold text-md">{total}</h3>
+          <h3 className="font-bold text-md">{cartSummary.netTotal}</h3>
         </div>
         <div>
           <Button size="lg" className="w-full">
-            Pay {total}
+            Pay {cartSummary.netTotal}
           </Button>
         </div>
       </section>
